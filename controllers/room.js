@@ -63,7 +63,7 @@ export const deleteRoom = async(req, res, next) => {
         await Room.findByIdAndDelete(req.params.id); 
         try {
             await Hotel.findByIdAndUpdate(hotelId, {
-                // mongoDb function to push saved room id inside Hotel rooms array
+                // mongoDb function to pull saved room id from Hotel rooms array
                 $pull: {rooms: req.params.id}
             })
         } catch (error) {

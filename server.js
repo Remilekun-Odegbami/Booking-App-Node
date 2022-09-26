@@ -1,12 +1,13 @@
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import authRoute from "./routes/auth.js"
-import usersRoute from "./routes/users.js"
-import hotelsRoute from "./routes/hotels.js"
-import roomsRoute from "./routes/rooms.js"
+import authRoute from "./routes/auth.js";
+import usersRoute from "./routes/users.js";
+import hotelsRoute from "./routes/hotels.js";
+import roomsRoute from "./routes/rooms.js";
 import cookieParser from "cookie-parser";
-
+import cors from "cors";
+import helmet from "helmet";
 
 const app = express();
 dotenv.config();
@@ -26,6 +27,14 @@ mongoose.connection.on("disconnected", () => {
     console.log("Disconnected from MongoDB")
 })
 
+// IMPORT SECURITY
+let corsOption = {
+  origin: "http://localhost:3000",
+  method: "GET, POST, DELETE, PUT, PATCH"
+}
+
+app.use(helmet());
+app.use(cors(corsOption))
 
 // middlewares
 
@@ -53,15 +62,7 @@ app.use((err, req, res, next) => {
   })
 })
 
-
-
-
-
-
 app.listen(PORT, () => {
     connect()
     console.log(`App is running at port ${PORT}`)
 })
-
-
-// 1:24:00
